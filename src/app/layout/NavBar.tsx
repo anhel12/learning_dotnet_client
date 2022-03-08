@@ -11,9 +11,8 @@ return (
 					<img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}}/>
 					Reactivities
 				</Menu.Item>
-				<Menu.Item as={NavLink} to ='/activities' name='Activities'>
-
-				</Menu.Item>
+				<Menu.Item as={NavLink} to ='/activities' name='Activities' />
+				<Menu.Item as={NavLink} to ='/errors' name='Errors' />
 				<Menu.Item>
 					<Button 
 						positive 
