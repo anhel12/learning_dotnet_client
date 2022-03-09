@@ -16,19 +16,19 @@ const ActivityDetails = () => {
 
   const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore;
 
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    if(id) loadActivity(id);
+    if (id) loadActivity(id);
   }, [id, loadActivity]);
 
-  if(loadingInitial || !activity) return <LoadingComponent />;
+  if (loadingInitial || !activity) return <LoadingComponent />;
 
   return (
     <Grid>
       <Grid.Column width={10}>
         <ActivityDetailedHeader activity={activity} />
-        <ActivityDetailedInfo activity={activity}/>
+        <ActivityDetailedInfo activity={activity} />
         <ActivityDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>

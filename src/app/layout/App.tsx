@@ -25,25 +25,25 @@ function App() {
       path: "/",
       element: <NavBar />,
       children: [
-        { 
-          path: "createActivity", 
-          element: <ActivityForm /> 
+        {
+          path: "createActivity",
+          element: <ActivityForm />
         },
-        { 
-          path: "manage/:id", 
-          element: <ActivityForm /> 
+        {
+          path: "manage/:id",
+          element: <ActivityForm />
         },
         {
           path: "activities",
           element: <ActivityDashboard />,
         },
-        { 
-          path: "activities/:id", 
-          element: <ActivityDetails /> 
+        {
+          path: "activities/:id",
+          element: <ActivityDetails />
         },
-        { 
-          path: "activities/:id", 
-          element: <ActivityDetails /> 
+        {
+          path: "activities/:id",
+          element: <ActivityDetails />
         },
         {
           path: "/errors",
@@ -59,13 +59,13 @@ function App() {
         }
       ]
     },
-    
+
   ]);
-  
+
   return (
     <>
-    <ToastContainer position='bottom-right' hideProgressBar/>
-      <Container style={{marginTop: '7em'}}>
+      <ToastContainer position='bottom-right' hideProgressBar />
+      <Container style={{ marginTop: '7em' }}>
         <Routing key={location.key} />
       </Container>
     </>

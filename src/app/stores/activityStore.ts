@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity } from "../models/activity";
@@ -8,7 +9,7 @@ export default class ActivityStore {
 	selectedActivity: Activity | undefined = undefined;
 	editMode = false;
 	loading = false;
-	loadingInitial = true;
+	loadingInitial = false;
 
 
 	constructor() {
@@ -16,17 +17,17 @@ export default class ActivityStore {
 	}
 
 	get activitiesByDate() {
-		return Array.from(this.activityRegistry.values()).sort((a,b) => 
-		Date.parse(a.date) - Date.parse(b.date));
+		return Array.from(this.activityRegistry.values()).sort((a, b) =>
+			a.date!.getTime() - b.date!.getTime());
 	}
 
 	get groupedActivities() {
 		return Object.entries(
 			this.activitiesByDate.reduce((activities, activity) => {
-				const date = activity.date;
+				const date = format(activity.date!, 'dd MMM yyyy');
 				activities[date] = activities[date] ? [...activities[date], activity] : [activity];
 				return activities;
-			}, {} as {[key: string]: Activity[]})
+			}, {} as { [key: string]: Activity[] })
 		)
 	}
 
@@ -36,7 +37,7 @@ export default class ActivityStore {
 			const activities = await agent.Activities.list();
 			activities.forEach(activity => {
 				this.setActivity(activity);
-      })
+			})
 			this.setLoadingInitial(false);
 		} catch (error) {
 			console.log(error);
@@ -46,7 +47,7 @@ export default class ActivityStore {
 
 	loadActivity = async (id: string) => {
 		let activity = this.getActivity(id);
-		if(activity) {
+		if (activity) {
 			this.selectedActivity = activity;
 			return activity;
 		} else {
@@ -70,8 +71,8 @@ export default class ActivityStore {
 		return this.activityRegistry.get(id);
 	}
 
-	private setActivity = (activity: Activity)  => {
-		activity.date = activity.date.split('T')[0];
+	private setActivity = (activity: Activity) => {
+		activity.date = new Date(activity.date!)
 		this.activityRegistry.set(activity.id, activity);
 	}
 	setLoadingInitial = (state: boolean) => {
@@ -92,7 +93,7 @@ export default class ActivityStore {
 			runInAction(() => {
 				this.loading = false;
 			})
-			
+
 		}
 	}
 
@@ -128,5 +129,5 @@ export default class ActivityStore {
 				this.loading = false;
 			})
 		}
-	} 
+	}
 }
