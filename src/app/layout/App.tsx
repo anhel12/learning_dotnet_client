@@ -15,6 +15,7 @@ import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
+import ProfilePage from '../../features/profiles/ProfilePage';
 
 
 function App() {
@@ -60,6 +61,10 @@ function App() {
         {
           path: "activities/:id",
           element: <ActivityDetails />
+        },
+        {
+          path: "/profiles/:username",
+          element: <ProfilePage />
         },
         {
           path: "/errors",
